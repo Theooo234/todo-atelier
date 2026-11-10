@@ -5,9 +5,16 @@ const authRoutes = require('./routes/auth');
 const todoRoutes = require('./routes/todos');
 const adminRoutes = require('./routes/admin');
 
+const helmet = require('helmet');
 const app = express();
 
-app.use(cors());
+app.use(helmet());
+app.use(cors({ origin: process.env.FRONT_ORIGIN || 'http://localhost:8080' }));
+
+app.use(cors({
+  origin: process.env.FRONT_ORIGIN || 'http://localhost:8080',
+}));
+
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
